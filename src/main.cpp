@@ -1,6 +1,8 @@
 #include <iostream>
 
+#include "frontend/frontend.hpp"
+
 int main() {
-    std::cout << "Hello, world!" << "\n";
+    Warehouse::Frontend frontend{};
     return 0;
 }

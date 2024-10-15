@@ -1,12 +1,19 @@
-# Minimum CMake version required
 cmake_minimum_required(VERSION 3.10)
 
-# Project name
 project(Warehouse)
 
-# Set C++ standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add the executable target
-add_executable(Warehouse src/main.cpp)
+find_package(OpenGL REQUIRED)
+
+add_subdirectory(third_party)
+
+file(GLOB_RECURSE SOURCES 
+   ${PROJECT_SOURCE_DIR}/src/*.cpp 
+   ${PROJECT_SOURCE_DIR}/src/*.c
+)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_link_libraries(Warehouse PRIVATE glfw glad)
