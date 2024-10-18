@@ -5,9 +5,7 @@ project(Warehouse)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-find_package(OpenGL REQUIRED)
-
-add_subdirectory(third_party)
+find_package(raylib REQUIRED)
 
 file(GLOB_RECURSE SOURCES 
    ${PROJECT_SOURCE_DIR}/src/*.cpp 
@@ -16,4 +14,4 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(Warehouse PRIVATE glfw glad)
+target_link_libraries(Warehouse PRIVATE raylib)

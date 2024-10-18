@@ -1,7 +1,6 @@
 #pragma once
+#include <raylib.h>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace Warehouse {
 class Frontend {
@@ -12,6 +11,5 @@ class Frontend {
         Frontend();
         ~Frontend();
     private:
-        GLFWwindow* window;
 };
 }

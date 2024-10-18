@@ -1,45 +1,58 @@
 #include "frontend.hpp"
-#include <GLFW/glfw3.h>
+#include "raylib.h"
 
 namespace Warehouse {
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }
 
-Frontend::Frontend() {
+Frontend::Frontend(){
     init();
+}
+
+Frontend::~Frontend(){}
+
+void Frontend::init() {
     draw();
 }
 
-Frontend::~Frontend() {
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}
+void Frontend::draw()
+{
+    const int screenWidth = 600;
+    const int screenHeight = 600;
 
-void Frontend::init() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    InitWindow(screenWidth, screenHeight, "Warehouse");
 
-    window = glfwCreateWindow(800, 600, "Warehouse", NULL, NULL);
-    glfwSetWindowUserPointer(window, this);
-    glfwMakeContextCurrent(window);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    Camera3D camera = { 0 };
+    camera.position = (Vector3){ 10.0f, 10.0f, 10.0f };
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 70.0f;
+    camera.projection = CAMERA_PERSPECTIVE;
 
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-}
+    Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
 
-void Frontend::draw() {
-    glfwMakeContextCurrent(window);
+    DisableCursor();
 
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+    SetTargetFPS(60);
 
-        glfwSwapBuffers(window);
+    while (!WindowShouldClose())
+    {
+        UpdateCamera(&camera, CAMERA_FREE);
 
-        glfwPollEvents();
+        BeginDrawing();
+
+            ClearBackground(RAYWHITE);
+
+            BeginMode3D(camera);
+
+                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
+
+            EndMode3D();
+
+        EndDrawing();
     }
+
+    CloseWindow(); 
 }
 
-}  // namespace Warehouse
+
+} // namespace Warehouse
