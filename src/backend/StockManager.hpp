@@ -18,17 +18,17 @@ public:
     }
 
     std::unordered_map<std::string, Stock> stocks;
-    std::unordered_map<std::string, Pallet> pallet;
+    std::unordered_map<std::string, Pallet> pallets;
 
     Pallet getPallet(std::string pallet_id);
     Stock getStock(std::string stock_id);
 
     bool palletFitsInStock(Pallet pallet, Stock stock);
     std::vector<std::string> getFreeStock();
-    std::string placeInStock();
-    std::string removeFromStock();
+    std::string placeInStock(Pallet pallet, Stock stock);
+    std::string removeFromStock(Pallet pallet);
 
-    private:
+private:
     StockManager(){};
 };
 
